@@ -12,8 +12,6 @@ class Lessons {
 
             const {name, unit_id} = req.body;
             const lesson = await lessonModel.insertMany({name,unit_id,pdf:req.files.pdf[0].filename, video:req.files.video[0].filename});
-            const unit =  await unitModel.findByIdAndUpdate(unit_id, {$push:{lessons:[lesson[0]._id]}}, {new:true});
-            if (!unit) return next(new AppError('this unit not found', 404));
             return res.json({message:"success"});
         })(req, res, next);
     }

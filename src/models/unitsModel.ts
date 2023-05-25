@@ -15,7 +15,20 @@ const UnitSchema: Schema<Unit> = new mongoose.Schema({
         ref:'Subject'
     },
     lessons:[{type:Schema.Types.ObjectId, ref:'Lesson'}]
+}, {timestamps:true, toJSON:{virtuals:true}, toObject:{virtuals:true}});
+
+
+UnitSchema.virtual('myLessons', {
+    ref: 'Lesson',
+    localField: '_id',
+    foreignField: 'Unit'
+})
+
+UnitSchema.pre(/^find/, function() {
+    this.populate('myLessons');
 });
+
+
 
 
 const unitModel: Model<Unit> = mongoose.model<Unit>('Unit', UnitSchema);
