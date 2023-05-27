@@ -25,7 +25,6 @@ class Assignment {
     getAssignment(req:any, res:Response, next:NextFunction):void{
         catchError(async (req:any, res:Response, next:NextFunction) => {
 
-
             const {id} = req.params;
             const quizes =  await AssignmentModel.find({lesson_id:id});
             if (!quizes.length) return next(new AppError('no quizes for this lessons', 404));
