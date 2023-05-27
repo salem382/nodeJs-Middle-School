@@ -13,8 +13,7 @@ const UnitSchema: Schema<Unit> = new mongoose.Schema({
     subject_id:{
         type:Schema.Types.ObjectId,
         ref:'Subject'
-    },
-    lessons:[{type:Schema.Types.ObjectId, ref:'Lesson'}]
+    }
 }, {timestamps:true, toJSON:{virtuals:true}, toObject:{virtuals:true}});
 
 

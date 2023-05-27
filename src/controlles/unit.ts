@@ -9,8 +9,8 @@ class Unit {
         catchError(async (req:any, res:Response, next:NextFunction) => {
 
             const {name, subject_id} = req.body;
-            await unitModel.insertMany({name, subject_id});
-            return res.json({message:"success"});
+            let unit = await unitModel.insertMany({name, subject_id});
+            return res.json({message:"success", unit});
         })(req, res, next);
     }
     updateUnit(req:any, res:Response, next:NextFunction):void{

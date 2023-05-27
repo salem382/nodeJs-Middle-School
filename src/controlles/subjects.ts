@@ -9,8 +9,8 @@ class Subject {
         catchError(async (req:any, res:Response, next:NextFunction) => {
 
             const {name, teacherName} = req.body;
-            await subjectModel.insertMany({name, teacherName, image:req.file.filename});
-            return res.json({message:"success"});
+            let subject =  await subjectModel.insertMany({name, teacherName, image:req.file.filename});
+            return res.json({message:"success",subject});
         })(req, res, next);
     }
     updateSubject(req:any, res:Response, next:NextFunction):void{

@@ -18,8 +18,8 @@ class Unit {
     addUnit(req, res, next) {
         (0, ApiError_1.catchError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { name, subject_id } = req.body;
-            yield unitsModel_1.default.insertMany({ name, subject_id });
-            return res.json({ message: "success" });
+            let unit = yield unitsModel_1.default.insertMany({ name, subject_id });
+            return res.json({ message: "success", unit });
         }))(req, res, next);
     }
     updateUnit(req, res, next) {

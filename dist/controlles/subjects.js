@@ -18,8 +18,8 @@ class Subject {
     addSubject(req, res, next) {
         (0, ApiError_1.catchError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { name, teacherName } = req.body;
-            yield subjectsModel_1.default.insertMany({ name, teacherName, image: req.file.filename });
-            return res.json({ message: "success" });
+            let subject = yield subjectsModel_1.default.insertMany({ name, teacherName, image: req.file.filename });
+            return res.json({ message: "success", subject });
         }))(req, res, next);
     }
     updateSubject(req, res, next) {

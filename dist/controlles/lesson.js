@@ -13,17 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ApiError_1 = require("../utils/ApiError");
-const unitsModel_1 = __importDefault(require("../models/unitsModel"));
 const lessonsModel_1 = __importDefault(require("../models/lessonsModel"));
 class Lessons {
     addLesson(req, res, next) {
         (0, ApiError_1.catchError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { name, unit_id } = req.body;
             const lesson = yield lessonsModel_1.default.insertMany({ name, unit_id, pdf: req.files.pdf[0].filename, video: req.files.video[0].filename });
-            const unit = yield unitsModel_1.default.findByIdAndUpdate(unit_id, { $push: { lessons: [lesson[0]._id] } }, { new: true });
-            if (!unit)
-                return next(new ApiError_1.AppError('this unit not found', 404));
-            return res.json({ message: "success" });
+            return res.json({ message: "success", lesson });
         }))(req, res, next);
     }
     updateLesson(req, res, next) {

@@ -9,8 +9,8 @@ class Assignment {
         catchError(async (req:any, res:Response, next:NextFunction) => {
 
             const {test_name, lesson_id, total_grade} = req.body;
-            await AssignmentModel.insertMany({test_name, lesson_id, total_grade});
-            return res.json({message:"success"});
+            let assignment =  await AssignmentModel.insertMany({test_name, lesson_id, total_grade});
+            return res.json({message:"success", assignment});
         })(req, res, next);
     }
     deleteAssignment(req:any, res:Response, next:NextFunction):void{
@@ -27,7 +27,7 @@ class Assignment {
 
 
             const {id} = req.params;
-            const quizes =  await AssignmentModel.find({lesson_id:id}).populate('questions');
+            const quizes =  await AssignmentModel.find({lesson_id:id});
             if (!quizes.length) return next(new AppError('no quizes for this lessons', 404));
             return res.json({message:"success", quizes});
         })(req, res, next);

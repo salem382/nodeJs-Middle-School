@@ -31,8 +31,15 @@ const UnitSchema = new mongoose_1.default.Schema({
     subject_id: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Subject'
-    },
-    lessons: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Lesson' }]
+    }
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
+UnitSchema.virtual('myLessons', {
+    ref: 'Lesson',
+    localField: '_id',
+    foreignField: 'Unit'
+});
+UnitSchema.pre(/^find/, function () {
+    this.populate('myLessons');
 });
 const unitModel = mongoose_1.default.model('Unit', UnitSchema);
 exports.default = unitModel;

@@ -18,8 +18,8 @@ class Assignment {
     addAssignment(req, res, next) {
         (0, ApiError_1.catchError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { test_name, lesson_id, total_grade } = req.body;
-            yield assignmentModel_1.default.insertMany({ test_name, lesson_id, total_grade });
-            return res.json({ message: "success" });
+            let assignment = yield assignmentModel_1.default.insertMany({ test_name, lesson_id, total_grade });
+            return res.json({ message: "success", assignment });
         }))(req, res, next);
     }
     deleteAssignment(req, res, next) {
@@ -34,7 +34,7 @@ class Assignment {
     getAssignment(req, res, next) {
         (0, ApiError_1.catchError)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const quizes = yield assignmentModel_1.default.find({ lesson_id: id }).populate('questions');
+            const quizes = yield assignmentModel_1.default.find({ lesson_id: id });
             if (!quizes.length)
                 return next(new ApiError_1.AppError('no quizes for this lessons', 404));
             return res.json({ message: "success", quizes });

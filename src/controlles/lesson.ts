@@ -12,7 +12,7 @@ class Lessons {
 
             const {name, unit_id} = req.body;
             const lesson = await lessonModel.insertMany({name,unit_id,pdf:req.files.pdf[0].filename, video:req.files.video[0].filename});
-            return res.json({message:"success"});
+            return res.json({message:"success", lesson});
         })(req, res, next);
     }
     updateLesson(req:any, res:Response, next:NextFunction):void{
